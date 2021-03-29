@@ -209,7 +209,7 @@ def build_stuff():
 
 def helpers():
 
-    exposure = [
+    portfolio_list = [
         {"Name": "AAPL", "Allocation": 35},
         {"Name": "AMZN", "Allocation": 95},
         {"Name": "MSFT", "Allocation": 80},
@@ -253,8 +253,12 @@ def helpers():
 
     b.stocks.append(Stock(symbol="GOOGL", weight=95))
 
-    for item in exposure:
+    for item in portfolio_list:
+        # append a stock to the basket
         b.stocks.append(Stock(item["Name"], item["Allocation"]))
+        # each time recalculate the sum of all the weights
+        b.sum_of_weights = b._calc_sum_of_weights()
+        b.weight_slice_value = b._calc_weight_slice_value()
 
 
 class Basket:
@@ -263,6 +267,18 @@ class Basket:
         self.sum_of_weights = 0
         self.percent = 100
         self.stocks = []
+
+    def _calc_sum_of_weights(self) -> int:
+        sum_of_weights = 0
+        # Todo - this should only loop if not already a sum of weights, if its more than 0 then it should just add the latest weight to it and not have to keep looping
+        for stock in self.stocks:
+            sum_of_weights = sum_of_weights + stock.weight
+
+        return sum_of_weights
+
+    def _calc_weight_slice_value(self) -> int:
+        weight_slice_value = 100 / self.sum_of_weights
+        return weight_slice_value
 
 
 class Stock:
