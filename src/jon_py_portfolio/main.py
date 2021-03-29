@@ -175,7 +175,7 @@ def build_stuff():
         {"Name": "TM", "Allocation": 20},
         {"Name": "AZN", "Allocation": 5},
         {"Name": "ABNB", "Allocation": 40},
-        {"Name": "AIR", "Allocation": 37},
+        {"Name": "EADSY", "Allocation": 37},
         {"Name": "IAG", "Allocation": 18},
         {"Name": "LHA.DE", "Allocation": 28},
         {"Name": "HTZGQ", "Allocation": 15},
@@ -207,6 +207,71 @@ def build_stuff():
     print(pf)
 
 
+def helpers():
+
+    exposure = [
+        {"Name": "AAPL", "Allocation": 35},
+        {"Name": "AMZN", "Allocation": 95},
+        {"Name": "MSFT", "Allocation": 80},
+        {"Name": "GOOGL", "Allocation": 100},
+        {"Name": "AXP", "Allocation": 10},
+        {"Name": "JNPR", "Allocation": 6},
+        {"Name": "ANET", "Allocation": 6},
+        {"Name": "PANW", "Allocation": 5},
+        {"Name": "CSCO", "Allocation": 5},
+        {"Name": "SNE", "Allocation": 5},
+        {"Name": "NVDA", "Allocation": 95},
+        {"Name": "TSLA", "Allocation": 100},
+        {"Name": "SPOT", "Allocation": 40},
+        {"Name": "V", "Allocation": 25},
+        {"Name": "MA", "Allocation": 25},
+        {"Name": "MCD", "Allocation": 5},
+        {"Name": "NFLX", "Allocation": 25},
+        {"Name": "PYPL", "Allocation": 25},
+        {"Name": "TMUS", "Allocation": 15},
+        {"Name": "LMT", "Allocation": 15},
+        {"Name": "MSI", "Allocation": 15},
+        {"Name": "BABA", "Allocation": 20},
+        {"Name": "PFE", "Allocation": 15},
+        {"Name": "INTC", "Allocation": 40},
+        {"Name": "AMD", "Allocation": 95},
+        {"Name": "TM", "Allocation": 20},
+        {"Name": "AZN", "Allocation": 5},
+        {"Name": "ABNB", "Allocation": 40},
+        {"Name": "EADSY", "Allocation": 37},
+        {"Name": "IAG", "Allocation": 18},
+        {"Name": "LHA.DE", "Allocation": 28},
+        {"Name": "HTZGQ", "Allocation": 15},
+        {"Name": "SIEGY", "Allocation": 35},
+        {"Name": "BMW.DE", "Allocation": 17},
+        {"Name": "VOW.DE", "Allocation": 15},
+        {"Name": "DAI.DE", "Allocation": 17},
+        {"Name": "SNE", "Allocation": 15},
+    ]
+
+    b = Basket()
+
+    b.stocks.append(Stock(symbol="GOOGL", weight=95))
+
+    for item in exposure:
+        b.stocks.append(Stock(item["Name"], item["Allocation"]))
+
+
+class Basket:
+    def __init__(self):
+        self.weight_slice_value = 0
+        self.sum_of_weights = 0
+        self.percent = 100
+        self.stocks = []
+
+
+class Stock:
+    def __init__(self, symbol, weight):
+        self.symbol = symbol
+        self.weight = weight
+        self.percentage = 0
+
+
 if __name__ == "__main__":
     # main()
-    build_stuff()
+    helpers()
