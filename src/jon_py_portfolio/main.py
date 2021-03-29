@@ -251,7 +251,7 @@ def helpers():
 
     b = Basket()
 
-    b.stocks.append(Stock(symbol="GOOGL", weight=95))
+    # b.stocks.append(Stock(symbol="GOOGL", weight=95))
 
     for item in portfolio_list:
         # append a stock to the basket
@@ -260,12 +260,16 @@ def helpers():
         b.sum_of_weights = b._calc_sum_of_weights()
         b.weight_slice_value = b._calc_weight_slice_value()
 
+    print(f"sum of weights: {b.sum_of_weights}")
+    print(f"weight slice value: {b.weight_slice_value}")
+
 
 class Basket:
     def __init__(self):
         self.weight_slice_value = 0
         self.sum_of_weights = 0
         self.percent = 100
+        self.total_expenditure = 0
         self.stocks = []
 
     def _calc_sum_of_weights(self) -> int:
@@ -280,11 +284,14 @@ class Basket:
         weight_slice_value = 100 / self.sum_of_weights
         return weight_slice_value
 
+    def _calc_purchased_amount(self) -> int:
+
 
 class Stock:
     def __init__(self, symbol, weight):
         self.symbol = symbol
         self.weight = weight
+        self.purchased_amount = 0
         self.percentage = 0
 
 
