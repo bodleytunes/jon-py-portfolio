@@ -74,12 +74,6 @@ def main():
         "SNE",
     ]
 
-    # d = {
-    #     (index for index, item in enumerate(names)):
-    #     "Name": (n for n in names),
-    #     "Allocation": 10,
-    # }
-
     d = dict.fromkeys(i for i in names)
     print(d)
 
@@ -96,15 +90,6 @@ def main():
     pf.ydata.head(5)
 
     pf.properties()
-
-    # data.
-
-    # df = pd.read_json
-    # Read in price data
-    # df = pd.read_csv(
-    #    "tests/resources/stock_prices.csv", parse_dates=True, index_col="date"
-    # )
-    # pd.read_pickle
 
 
 def build_stuff():
