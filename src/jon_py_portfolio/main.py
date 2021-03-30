@@ -147,43 +147,42 @@ def build_stuff():
     # ]
 
     exposure = [
-        {"Name": "AAPL", "Allocation": 35},
-        {"Name": "AMZN", "Allocation": 95},
-        {"Name": "MSFT", "Allocation": 80},
-        {"Name": "GOOGL", "Allocation": 100},
-        {"Name": "AXP", "Allocation": 10},
-        {"Name": "JNPR", "Allocation": 6},
-        {"Name": "ANET", "Allocation": 6},
-        {"Name": "PANW", "Allocation": 5},
-        {"Name": "CSCO", "Allocation": 5},
-        {"Name": "SNE", "Allocation": 5},
-        {"Name": "NVDA", "Allocation": 95},
-        {"Name": "TSLA", "Allocation": 100},
-        {"Name": "SPOT", "Allocation": 40},
-        {"Name": "V", "Allocation": 25},
-        {"Name": "MA", "Allocation": 25},
-        {"Name": "MCD", "Allocation": 5},
-        {"Name": "NFLX", "Allocation": 25},
-        {"Name": "PYPL", "Allocation": 25},
-        {"Name": "TMUS", "Allocation": 15},
-        {"Name": "LMT", "Allocation": 15},
-        {"Name": "MSI", "Allocation": 15},
-        {"Name": "BABA", "Allocation": 20},
-        {"Name": "PFE", "Allocation": 15},
-        {"Name": "INTC", "Allocation": 40},
-        {"Name": "AMD", "Allocation": 95},
-        {"Name": "TM", "Allocation": 20},
-        {"Name": "AZN", "Allocation": 5},
-        {"Name": "ABNB", "Allocation": 40},
-        {"Name": "EADSY", "Allocation": 37},
-        {"Name": "IAG", "Allocation": 18},
-        {"Name": "LHA.DE", "Allocation": 28},
-        {"Name": "HTZGQ", "Allocation": 15},
-        {"Name": "SIEGY", "Allocation": 35},
-        {"Name": "BMW.DE", "Allocation": 17},
-        {"Name": "VOW.DE", "Allocation": 15},
-        {"Name": "DAI.DE", "Allocation": 17},
-        {"Name": "SNE", "Allocation": 15},
+        {"Name": "AAPL", "Allocation": 35},  # Apple
+        {"Name": "AMZN", "Allocation": 95},  # Amazon
+        {"Name": "MSFT", "Allocation": 80},  # Microsoft
+        {"Name": "GOOGL", "Allocation": 100},  # Google Alphabet
+        {"Name": "AXP", "Allocation": 10},  # AMEX
+        {"Name": "JNPR", "Allocation": 6},  # Juniper Networks
+        {"Name": "ANET", "Allocation": 6},  # Arista Networks
+        {"Name": "PANW", "Allocation": 5},  # Palo Alto Networks
+        {"Name": "CSCO", "Allocation": 5},  # Cisco Systems
+        {"Name": "SNE", "Allocation": 5},  # Sony
+        {"Name": "NVDA", "Allocation": 95},  # Nvidia
+        {"Name": "TSLA", "Allocation": 100},  # Tesla
+        {"Name": "SPOT", "Allocation": 40},  # Spotify
+        {"Name": "V", "Allocation": 25},  # Visa
+        {"Name": "MA", "Allocation": 25},  # Mastercard
+        {"Name": "MCD", "Allocation": 5},  # Mcdonalds
+        {"Name": "NFLX", "Allocation": 25},  # Netflix
+        {"Name": "PYPL", "Allocation": 25},  # Paypal
+        {"Name": "TMUS", "Allocation": 15},  # T-Mobile US
+        {"Name": "LMT", "Allocation": 15},  # Lockheed Martin
+        {"Name": "MSI", "Allocation": 15},  # Motorola
+        {"Name": "BABA", "Allocation": 20},  # Alibaba
+        {"Name": "PFE", "Allocation": 15},  # Pfizer
+        {"Name": "INTC", "Allocation": 40},  # Intel
+        {"Name": "AMD", "Allocation": 95},  # AMD
+        {"Name": "TM", "Allocation": 20},  # Toyota
+        {"Name": "AZN", "Allocation": 8},  # AstraZeneca
+        {"Name": "ABNB", "Allocation": 40},  # Airbnb
+        {"Name": "EADSY", "Allocation": 37},  #
+        {"Name": "IAG", "Allocation": 15},  # British Airways / IAG
+        {"Name": "LHA.DE", "Allocation": 28},  # Lufthansa
+        {"Name": "HTZGQ", "Allocation": 15},  # Hertz
+        {"Name": "SIEGY", "Allocation": 35},  # Seimens
+        {"Name": "BMW.DE", "Allocation": 17},  # BMW
+        {"Name": "VOW.DE", "Allocation": 15},  # Volkswagen Audi
+        {"Name": "DAI.DE", "Allocation": 17},  # Mercedes Benz (Daimler AG)
     ]
 
     pf_allocation = pd.DataFrame(exposure)
@@ -244,7 +243,6 @@ def build_portfolio():
         {"Name": "BMW.DE", "Allocation": 17},
         {"Name": "VOW.DE", "Allocation": 15},
         {"Name": "DAI.DE", "Allocation": 17},
-        {"Name": "SNE", "Allocation": 15},
     ]
 
     #  Yahoo finance downloads / join all the symbols in one line
@@ -282,8 +280,11 @@ def build_portfolio():
         b._calc_stock_purchase_amount()
 
     for stock in b.stocks:
+        # trim to 2 decimal places
+        stock_purchase_amount = float("{:.2f}".format(stock.purchase_amount))
+        stock_percentage = float("{:.2f}".format(stock.percentage))
         print(
-            f"|| Stock Name: {stock.symbol} || Individual Stock Percentage: {stock.percentage} || Amount to be purchased: £{stock.purchase_amount} of £{b.total_expenditure} ||"
+            f"|| Stock Name: {stock.symbol} || Individual Stock Percentage: {stock_percentage}% || Amount to be purchased: £{stock_purchase_amount} of £{b.total_expenditure} ||"
         )
 
 
