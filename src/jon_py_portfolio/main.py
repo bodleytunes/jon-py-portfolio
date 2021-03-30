@@ -3,7 +3,9 @@ from pypfopt import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import expected_returns
 
+
 import yfinance as yf
+from currency_converter import CurrencyConverter
 
 from finquant.portfolio import build_portfolio
 
@@ -206,6 +208,8 @@ def build_stuff():
 
 def build_portfolio():
 
+    c = CurrencyConverter()
+
     portfolio_list = [
         {"Name": "AAPL", "Allocation": 35},
         {"Name": "AMZN", "Allocation": 95},
@@ -262,17 +266,29 @@ def build_portfolio():
     print(f"sum of weights: {b.sum_of_weights}")
     print(f"weight slice value: {b.weight_slice_value}")
 
+    # Set Values for basket of stocks
     for stock in b.stocks:
         b._calc_stock_percentage()
         b._calc_stock_purchase_amount()
-        b._set_stock_close_price(stock.symbol, ydata)
 
+    # set close price data for each stock
+    b._set_stock_close_price(ydata)
+
+    # set number (or fraction) of shares to buy
+    b._set_no_of_shares_to_buy(ydata)
+
+    # Display Results
     for stock in b.stocks:
         # trim to 2 decimal places
         stock_purchase_amount = float("{:.2f}".format(stock.purchase_amount))
         stock_percentage = float("{:.2f}".format(stock.percentage))
+        stock_close_price = float("{:.2f}".format(stock.close_price))
+        stock_close_price_gbp = float(
+            "{:.2f}".format(c.convert(stock_close_price, "USD", "GBP"))
+        )
+
         print(
-            f"|| Stock Name: {stock.symbol} || Individual Stock Percentage: {stock_percentage}% || Amount to be purchased: £{stock_purchase_amount} of £{b.total_expenditure} ||"
+            f"|| Stock Name: {stock.symbol} || Individual Stock Percentage: {stock_percentage}% || Amount to be purchased: £{stock_purchase_amount} of £{b.total_expenditure} || Closed Price: ${stock_close_price} / £{stock_close_price_gbp} || No. of shares to own: {stock.no_of_shares} ||"
         )
 
 
@@ -291,7 +307,6 @@ def get_yahoo_data(portfolio_list):
         proxy=None,
     )
 
-    # print(data["TSLA"]["Close"])
     # get list of all the symbols
     symbol_list = list(d[0] for d in ydata)
     # list close price in yfinance dataframe (using iloc)
@@ -331,10 +346,20 @@ class Basket:
         for stock in self.stocks:
             stock.purchase_amount = (self.sum_of_weights / 100) * stock.percentage
 
-    def _set_stock_close_price(self, symbol, ydata):
+    def _set_stock_close_price(self, ydata):
 
         for stock in self.stocks:
-            stock.close_price = ydata[symbol]["Close"].iloc[0]
+            stock.close_price = ydata[stock.symbol]["Close"].iloc[0]
+
+    def _set_no_of_shares_to_buy(self, ydata):
+
+        c = CurrencyConverter()
+
+        for stock in self.stocks:
+
+            purchase_amount_usd = c.convert(stock.purchase_amount, "GBP", "USD")
+            # calc the number of shares (or fraction) to buy
+            stock.no_of_shares = purchase_amount_usd / stock.close_price
 
 
 class Stock:

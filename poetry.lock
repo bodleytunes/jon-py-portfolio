@@ -45,6 +45,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "currencyconverter"
+version = "0.16"
+description = "A currency converter using the European Central Bank data."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "cvxpy"
 version = "1.1.11"
 description = "A domain-specific language for modeling convex optimization problems in Python."
@@ -427,7 +435,7 @@ requests = ">=2.20"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ca774ec14a17938bc833315ec4390d98ee86c6c81a081fea04eb1440701c9db7"
+content-hash = "af1bb953bbb1419773ac3e8e6b02472b3c44aa4af766861e2ff26279ecb20b60"
 
 [metadata.files]
 atomicwrites = [
@@ -449,6 +457,10 @@ chardet = [
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
+]
+currencyconverter = [
+    {file = "CurrencyConverter-0.16-py2.py3-none-any.whl", hash = "sha256:01b8b3ee111fde0d15bf55c859eb09a5a7373517f1a4020ad484cb53742a636f"},
+    {file = "CurrencyConverter-0.16.tar.gz", hash = "sha256:0c670140a572f7313c8518ab87f66c2961ca619c734a39321113ac6dec9158c5"},
 ]
 cvxpy = [
     {file = "cvxpy-1.1.11-cp36-cp36m-win_amd64.whl", hash = "sha256:dd4180bf75b4836322d71f6508a1f683e7f770e0ace8604362be705ee6b519f8"},
