@@ -210,6 +210,9 @@ def build_portfolio():
 
     c = CurrencyConverter()
 
+    b = Basket()
+    b.total_expenditure = 850  # total distributed funds to portfolio (in GBP)
+
     portfolio_list = [
         {"Name": "AAPL", "Allocation": 35},
         {"Name": "AMZN", "Allocation": 95},
@@ -251,11 +254,6 @@ def build_portfolio():
 
     ydata = get_yahoo_data(portfolio_list)
 
-    b = Basket()
-    b.total_expenditure = 1000  # total distributed funds to portfolio
-
-    # b.stocks.append(Stock(symbol="GOOGL", weight=95))
-
     for item in portfolio_list:
         # append a stock to the basket
         b.stocks.append(Stock(item["Name"], item["Allocation"]))
@@ -288,7 +286,7 @@ def build_portfolio():
         )
 
         print(
-            f"|| Stock Name: {stock.symbol} || Individual Stock Percentage: {stock_percentage}% || Amount to be purchased: £{stock_purchase_amount} of £{b.total_expenditure} || Closed Price: ${stock_close_price} / £{stock_close_price_gbp} || No. of shares to own: {stock.no_of_shares} ||"
+            f"|| Stock Name: {stock.symbol} *({stock.weight}) || Individual Stock Percentage: {stock_percentage}% || Amount to be purchased: £{stock_purchase_amount} of £{b.total_expenditure} || Closed Price: ${stock_close_price} / £{stock_close_price_gbp} || No. of shares to own: {stock.no_of_shares} ||"
         )
 
 
@@ -344,7 +342,7 @@ class Basket:
     def _calc_stock_purchase_amount(self):
 
         for stock in self.stocks:
-            stock.purchase_amount = (self.sum_of_weights / 100) * stock.percentage
+            stock.purchase_amount = (self.total_expenditure / 100) * stock.percentage
 
     def _set_stock_close_price(self, ydata):
 
