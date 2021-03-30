@@ -245,20 +245,7 @@ def build_portfolio():
         {"Name": "DAI.DE", "Allocation": 17},
     ]
 
-    #  Yahoo finance downloads / join all the symbols in one line
-    tickers = " ".join(list(i["Name"] for i in portfolio_list))
-    print(tickers)
-
-    data = yf.download(
-        tickers=tickers,
-        period="1d",
-        group_by="ticker",
-        auto_adjust=True,
-        threads=True,
-        proxy=None,
-    )
-
-    print(data)
+    get_yahoo_data(portfolio_list)
 
     b = Basket()
     b.total_expenditure = 1000  # total distributed funds to portfolio
@@ -286,6 +273,29 @@ def build_portfolio():
         print(
             f"|| Stock Name: {stock.symbol} || Individual Stock Percentage: {stock_percentage}% || Amount to be purchased: £{stock_purchase_amount} of £{b.total_expenditure} ||"
         )
+
+
+def get_yahoo_data(portfolio_list):
+
+    #  Yahoo finance downloads / join all the symbols in one line of strings separated by " " space
+    tickers = " ".join(list(i["Name"] for i in portfolio_list))
+    # print(tickers)
+
+    data = yf.download(
+        tickers=tickers,
+        period="1d",
+        group_by="ticker",
+        auto_adjust=True,
+        threads=True,
+        proxy=None,
+    )
+
+    # print(data["TSLA"]["Close"])
+    # get list of all the symbols
+    symbol_list = list(d[0] for d in data)
+    # list close price in yfinance dataframe (using iloc)
+    for symbol in symbol_list:
+        print(data[symbol]["Close"].iloc[0])
 
 
 class Basket:
