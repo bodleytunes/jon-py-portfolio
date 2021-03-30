@@ -186,8 +186,6 @@ def build_stuff():
         {"Name": "SNE", "Allocation": 15},
     ]
 
-    # d = dict.fromkeys(map((i for i in names), 0))
-
     pf_allocation = pd.DataFrame(exposure)
     names = pf_allocation["Name"].values.tolist()
 
@@ -207,7 +205,7 @@ def build_stuff():
     print(pf)
 
 
-def helpers():
+def build_portfolio():
 
     portfolio_list = [
         {"Name": "AAPL", "Allocation": 35},
@@ -250,6 +248,7 @@ def helpers():
     ]
 
     b = Basket()
+    b.total_expenditure = 1000  # total distributed funds to portfolio
 
     # b.stocks.append(Stock(symbol="GOOGL", weight=95))
 
@@ -262,6 +261,15 @@ def helpers():
 
     print(f"sum of weights: {b.sum_of_weights}")
     print(f"weight slice value: {b.weight_slice_value}")
+
+    for stock in b.stocks:
+        b._calc_stock_percentage()
+        b._calc_stock_purchase_amount()
+
+    for stock in b.stocks:
+        print(
+            f"|| Stock Name: {stock.symbol} || Individual Stock Percentage: {stock.percentage} || Amount to be purchased: £{stock.purchase_amount} of £{b.total_expenditure} ||"
+        )
 
 
 class Basket:
@@ -284,17 +292,25 @@ class Basket:
         weight_slice_value = 100 / self.sum_of_weights
         return weight_slice_value
 
-    def _calc_purchased_amount(self) -> int:
+    def _calc_stock_percentage(self):
+
+        for stock in self.stocks:
+            stock.percentage = stock.weight * self.weight_slice_value
+
+    def _calc_stock_purchase_amount(self):
+
+        for stock in self.stocks:
+            stock.purchase_amount = (self.sum_of_weights / 100) * stock.percentage
 
 
 class Stock:
     def __init__(self, symbol, weight):
         self.symbol = symbol
         self.weight = weight
-        self.purchased_amount = 0
+        self.purchase_amount = 0
         self.percentage = 0
 
 
 if __name__ == "__main__":
     # main()
-    helpers()
+    build_portfolio()
