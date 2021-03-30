@@ -247,6 +247,21 @@ def build_portfolio():
         {"Name": "SNE", "Allocation": 15},
     ]
 
+    #  Yahoo finance downloads / join all the symbols in one line
+    tickers = " ".join(list(i["Name"] for i in portfolio_list))
+    print(tickers)
+
+    data = yf.download(
+        tickers=tickers,
+        period="1d",
+        group_by="ticker",
+        auto_adjust=True,
+        threads=True,
+        proxy=None,
+    )
+
+    print(data)
+
     b = Basket()
     b.total_expenditure = 1000  # total distributed funds to portfolio
 
