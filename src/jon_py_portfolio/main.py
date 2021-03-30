@@ -109,45 +109,6 @@ def main():
 
 def build_stuff():
 
-    # exposure = [
-    #     {"Name": "AAPL", "Allocation": 5},
-    #     {"Name": "AMZN", "Allocation": 5},
-    #     {"Name": "MSFT", "Allocation": 5},
-    #     {"Name": "GOOGL", "Allocation": 5},
-    #     {"Name": "AXP", "Allocation": 5},
-    #     {"Name": "JNPR", "Allocation": 5},
-    #     {"Name": "ANET", "Allocation": 5},
-    #     {"Name": "PANW", "Allocation": 5},
-    #     {"Name": "CSCO", "Allocation": 5},
-    #     {"Name": "NVDA", "Allocation": 5},
-    #     {"Name": "TSLA", "Allocation": 5},
-    #     {"Name": "SPOT", "Allocation": 5},
-    #     {"Name": "V", "Allocation": 5},
-    #     {"Name": "MA", "Allocation": 5},
-    #     {"Name": "MCD", "Allocation": 5},
-    #     {"Name": "NFLX", "Allocation": 5},
-    #     {"Name": "PYPL", "Allocation": 5},
-    #     {"Name": "TMUS", "Allocation": 5},
-    #     {"Name": "LMT", "Allocation": 5},
-    #     {"Name": "MSI", "Allocation": 5},
-    #     {"Name": "BABA", "Allocation": 5},
-    #     {"Name": "PFE", "Allocation": 5},
-    #     {"Name": "INTC", "Allocation": 5},
-    #     {"Name": "AMD", "Allocation": 5},
-    #     {"Name": "TM", "Allocation": 5},
-    #     {"Name": "AZN", "Allocation": 5},
-    #     {"Name": "ABNB", "Allocation": 5},
-    #     {"Name": "AIR", "Allocation": 5},
-    #     {"Name": "IAG", "Allocation": 5},
-    #     {"Name": "LHA.DE", "Allocation": 5},
-    #     {"Name": "HTZGQ", "Allocation": 5},
-    #     {"Name": "SIEGY", "Allocation": 5},
-    #     {"Name": "BMW.DE", "Allocation": 5},
-    #     {"Name": "VOW.DE", "Allocation": 5},
-    #     {"Name": "DAI.DE", "Allocation": 5},
-    #     {"Name": "SNE", "Allocation": 5},
-    # ]
-
     exposure = [
         {"Name": "AAPL", "Allocation": 35},  # Apple
         {"Name": "AMZN", "Allocation": 95},  # Amazon
