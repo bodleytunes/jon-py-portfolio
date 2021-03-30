@@ -16,7 +16,7 @@ def main():
 
     # history = msft.history(period="1y")
 
-    data = yf.download(
+    ydata = yf.download(
         tickers="AAPL AMZN MSFT GOOGL AXP \
              JNPR ANET PANW CSCO NVDA TSLA \
                  SPOT V MA MCD NFLX PYPL \
@@ -30,7 +30,7 @@ def main():
         proxy=None,
     )
 
-    print(data)
+    print(ydata)
 
     names = [
         "AAPL",
@@ -91,7 +91,7 @@ def main():
         data_api="yfinance",
     )
 
-    pf.data.head(5)
+    pf.ydata.head(5)
 
     pf.properties()
 
@@ -245,7 +245,7 @@ def build_portfolio():
         {"Name": "DAI.DE", "Allocation": 17},
     ]
 
-    get_yahoo_data(portfolio_list)
+    ydata = get_yahoo_data(portfolio_list)
 
     b = Basket()
     b.total_expenditure = 1000  # total distributed funds to portfolio
@@ -265,6 +265,7 @@ def build_portfolio():
     for stock in b.stocks:
         b._calc_stock_percentage()
         b._calc_stock_purchase_amount()
+        b._set_stock_close_price(stock.symbol, ydata)
 
     for stock in b.stocks:
         # trim to 2 decimal places
@@ -281,7 +282,7 @@ def get_yahoo_data(portfolio_list):
     tickers = " ".join(list(i["Name"] for i in portfolio_list))
     # print(tickers)
 
-    data = yf.download(
+    ydata = yf.download(
         tickers=tickers,
         period="1d",
         group_by="ticker",
@@ -292,10 +293,12 @@ def get_yahoo_data(portfolio_list):
 
     # print(data["TSLA"]["Close"])
     # get list of all the symbols
-    symbol_list = list(d[0] for d in data)
+    symbol_list = list(d[0] for d in ydata)
     # list close price in yfinance dataframe (using iloc)
-    for symbol in symbol_list:
-        print(data[symbol]["Close"].iloc[0])
+    # for symbol in symbol_list:
+    #    print(ydata[symbol]["Close"].iloc[0])
+
+    return ydata
 
 
 class Basket:
@@ -328,6 +331,11 @@ class Basket:
         for stock in self.stocks:
             stock.purchase_amount = (self.sum_of_weights / 100) * stock.percentage
 
+    def _set_stock_close_price(self, symbol, ydata):
+
+        for stock in self.stocks:
+            stock.close_price = ydata[symbol]["Close"].iloc[0]
+
 
 class Stock:
     def __init__(self, symbol, weight):
@@ -335,6 +343,8 @@ class Stock:
         self.weight = weight
         self.purchase_amount = 0
         self.percentage = 0
+        self.close_price = 0
+        self.purchase_price = 0
 
 
 if __name__ == "__main__":
